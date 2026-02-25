@@ -2,7 +2,7 @@
 
 A Python 3 CLI tool that lets you install [Kali Linux](https://www.kali.org/) penetration testing tools on any Debian/Ubuntu-based distribution — without having to install Kali itself.
 
-Kali Linux ships with 300+ security and hacking tools (nmap, aircrack-ng, burpsuite, sqlmap, metasploit, etc.), but they are normally only available inside a Kali installation. **katoolin3** adds the official Kali repositories to your system and provides an interactive menu to browse, search, and install any of those tools individually or by category.
+Kali Linux ships with 400+ security and hacking tools (nmap, aircrack-ng, burpsuite, sqlmap, metasploit, netexec, bloodhound, etc.), but they are normally only available inside a Kali installation. **katoolin3** adds the official Kali repositories to your system and provides an interactive menu to browse, search, and install any of those tools individually or by category.
 
 This is a complete Python 3 rewrite of the original [katoolin](https://github.com/LionSec/katoolin) by LionSec.
 
@@ -13,16 +13,17 @@ The original katoolin was a single monolithic Python 2 script (1300+ lines) that
 - **Python 3 support** — Python 2 reached end-of-life in 2020
 - **Modular architecture** — clean separation into categories, installer, repository manager, and CLI
 - **Safe repository management** — uses a dedicated file in `/etc/apt/sources.list.d/` instead of appending to `sources.list`
-- **Data-driven design** — all 338 tools defined as data, not repeated if/elif chains
+- **Data-driven design** — all 415 tools defined as data, not repeated if/elif chains
 - **Proper error handling** — uses `subprocess.run()` with return code checks instead of `os.system()`
 - **pip installable** — standard `setup.py` with console script entry point
-- **Search functionality** — find any tool across all 14 categories
-- **Fixed broken install methods** — the original used dead `wget` URLs and outdated `git clone` commands for ~12 tools; all 338 tools now install cleanly via `apt` from the official Kali repository
+- **Search functionality** — find any tool across all 15 categories
+- **Fixed broken install methods** — the original used dead `wget` URLs and outdated `git clone` commands for ~12 tools; all tools now install cleanly via `apt` from the official Kali repository
+- **Updated tool list (2025/2026)** — added modern tools like netexec, bloodhound, evil-winrm, nuclei, ffuf, feroxbuster, ghidra, hashcat, bettercap, and many more; reorganized categories to match current Kali (added Database Assessment, Post Exploitation, Social Engineering)
 
 ## Features
 
 - Add/remove Kali Linux repositories safely
-- Browse 14 categories with 338 penetration testing tools
+- Browse 15 categories with 415 penetration testing tools
 - Install individual tools or entire categories at once
 - Search tools by name across all categories
 - Automatic GPG key import and targeted repository updates
@@ -31,20 +32,21 @@ The original katoolin was a single monolithic Python 2 script (1300+ lines) that
 
 | # | Category | Tools |
 |---|----------|-------|
-| 1 | Information Gathering | nmap, wireshark, recon-ng, theharvester, masscan, ... |
-| 2 | Vulnerability Analysis | sqlmap, openvas, lynis, yersinia, ... |
-| 3 | Wireless Attacks | aircrack-ng, kismet, wifite, reaver, bully, ... |
-| 4 | Web Applications | burpsuite, wpscan, zaproxy, dirb, gobuster, w3af, ... |
-| 5 | Sniffing & Spoofing | mitmproxy, responder, sslstrip, wireshark, ... |
-| 6 | Maintaining Access | weevely, powersploit, nishang, cryptcat, ... |
-| 7 | Reporting Tools | dradis, keepnote, magictree, pipal, ... |
-| 8 | Exploitation Tools | armitage, beef-xss, metasploit (via armitage), set, ... |
-| 9 | Forensics Tools | binwalk, volatility, foremost, cuckoo, ... |
-| 10 | Stress Testing | slowhttptest, t50, dhcpig, thc-ssl-dos, ... |
-| 11 | Password Attacks | john, hydra, hashcat, crunch, ncrack, ... |
-| 12 | Reverse Engineering | apktool, edb-debugger, yara, valgrind, ... |
-| 13 | Hardware Hacking | android-sdk, arduino, sakis3g, ... |
-| 14 | Extra | Kali metapackages, squid3 |
+| 1 | Information Gathering | nmap, amass, recon-ng, theharvester, masscan, subfinder, sherlock, ... |
+| 2 | Vulnerability Analysis | sqlmap, nuclei, nikto, lynis, legion, openvas, ... |
+| 3 | Web Application Analysis | burpsuite, ffuf, feroxbuster, gobuster, wpscan, caido, dirsearch, ... |
+| 4 | Database Assessment | sqlmap, jsql, dbpwaudit, hexorbase, ... |
+| 5 | Password Attacks | john, hashcat, hydra, medusa, crowbar, brutespray, ... |
+| 6 | Wireless Attacks | aircrack-ng, airgeddon, kismet, wifite, bully, hcxtools, mdk4, ... |
+| 7 | Reverse Engineering | ghidra, apktool, edb-debugger, yara, detect-it-easy, ... |
+| 8 | Exploitation Tools | metasploit-framework, armitage, beef-xss, evilginx2, set, ... |
+| 9 | Sniffing & Spoofing | bettercap, responder, mitmproxy, mitm6, ettercap, wireshark, ... |
+| 10 | Post Exploitation | netexec, bloodhound, evil-winrm, impacket-scripts, mimikatz, ... |
+| 11 | Forensics | autopsy, binwalk, volatility, chainsaw, foremost, testdisk, ... |
+| 12 | Reporting Tools | dradis, eyewitness, cherrytree, maltego, faraday-cli, ... |
+| 13 | Social Engineering | set, beef-xss, maltego, wifiphisher, ... |
+| 14 | Stress Testing | slowhttptest, t50, dhcpig, thc-ssl-dos, ... |
+| 15 | Hardware Hacking | android-sdk, arduino, apktool, ... |
 
 ## Requirements
 
