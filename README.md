@@ -75,6 +75,42 @@ sudo python3 -m katoolin3
 
 ## Usage
 
+### CLI Mode (non-interactive)
+
+Quick commands for scripting and fast installs:
+
+```bash
+# Install top essential tools (~50 tools, the best from each category)
+sudo katoolin3 --top
+
+# Install ALL 415 tools
+sudo katoolin3 --full
+
+# Install a specific category (e.g. 10 = Post Exploitation)
+sudo katoolin3 --category 10
+
+# Install a single tool
+sudo katoolin3 --install netexec
+
+# List all categories
+katoolin3 --list
+
+# Search for a tool
+katoolin3 --search nmap
+
+# Manage repositories
+sudo katoolin3 --add-repo
+sudo katoolin3 --remove-repo
+```
+
+### Interactive Mode
+
+Run without arguments to get the interactive menu:
+
+```bash
+sudo katoolin3
+```
+
 ```
 Main menu:
   1  Manage Kali repositories (add/remove)

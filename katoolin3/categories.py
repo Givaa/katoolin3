@@ -498,6 +498,38 @@ CATEGORIES = {
 }
 
 
+# Top/essential tools per category (used by --top flag)
+TOP_TOOLS = {
+    1: ["nmap", "amass", "theharvester", "masscan", "recon-ng"],
+    2: ["nuclei", "nikto", "sqlmap", "lynis"],
+    3: ["burpsuite", "ffuf", "gobuster", "wpscan", "feroxbuster"],
+    4: ["sqlmap", "jsql"],
+    5: ["john", "hashcat", "hydra", "crunch", "medusa"],
+    6: ["aircrack-ng", "wifite", "kismet", "bully", "airgeddon"],
+    7: ["ghidra", "apktool", "yara", "binwalk"],
+    8: ["metasploit-framework", "exploitdb", "beef-xss", "set", "armitage"],
+    9: ["bettercap", "responder", "mitmproxy", "wireshark", "ettercap"],
+    10: ["netexec", "bloodhound", "evil-winrm", "impacket-scripts", "mimikatz"],
+    11: ["autopsy", "binwalk", "volatility", "foremost", "testdisk"],
+    12: ["dradis", "eyewitness", "cherrytree", "maltego"],
+    13: ["set", "beef-xss"],
+    14: ["slowhttptest", "t50", "thc-ssl-dos"],
+    15: ["android-sdk", "apktool", "arduino"],
+}
+
+
+def get_top_tools():
+    """Return flat list of top tools (no duplicates)."""
+    seen = set()
+    tools = []
+    for cat_tools in TOP_TOOLS.values():
+        for tool in cat_tools:
+            if tool not in seen:
+                seen.add(tool)
+                tools.append(tool)
+    return tools
+
+
 def get_tool_name(tool):
     """Get display name from a tool entry."""
     return tool
