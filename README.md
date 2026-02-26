@@ -120,7 +120,8 @@ Main menu:
   1  Manage Kali repositories (add/remove)
   2  Browse tool categories
   3  Search for a specific tool
-  4  Help
+  4  Show installed tools
+  5  Help
   0  Exit
 
 In category view:
