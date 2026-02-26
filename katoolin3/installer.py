@@ -2,9 +2,67 @@
 
 import subprocess
 
-from .categories import CATEGORIES
-from .colors import print_success, print_error, print_info
+from .categories import CATEGORIES, get_tool_name
+from .colors import Colors, colored, print_success, print_error, print_info
 from .repository import setup_repo, is_repo_added
+
+
+def is_installed(package_name):
+    """Check if a package is installed via dpkg."""
+    try:
+        result = subprocess.run(
+            ["dpkg-query", "-W", "-f=${Status}", package_name],
+            capture_output=True,
+            text=True,
+        )
+        return "install ok installed" in result.stdout
+    except FileNotFoundError:
+        return False
+
+
+def show_installed(category_id=None):
+    """Show installed tools, optionally filtered by category."""
+    if category_id is not None:
+        if category_id not in CATEGORIES:
+            print_error(f"Invalid category: {category_id}")
+            return
+        cats = {category_id: CATEGORIES[category_id]}
+    else:
+        cats = CATEGORIES
+
+    total_installed = 0
+    total_tools = 0
+
+    for cat_id, cat in sorted(cats.items()):
+        installed = []
+        not_installed = []
+        for tool in cat["tools"]:
+            name = get_tool_name(tool)
+            if is_installed(name):
+                installed.append(name)
+            else:
+                not_installed.append(name)
+
+        total_installed += len(installed)
+        total_tools += len(cat["tools"])
+
+        marker = colored(
+            f"[{len(installed)}/{len(cat['tools'])}]", Colors.GREEN
+        )
+        print(f"\n  {marker} {cat['name']}")
+        if installed:
+            for name in installed:
+                print(f"    {colored('+', Colors.GREEN)} {name}")
+        if not_installed and category_id is not None:
+            for name in not_installed:
+                print(f"    {colored('-', Colors.RED)} {name}")
+
+    print(
+        colored(
+            f"\n  Total: {total_installed}/{total_tools} tools installed\n",
+            Colors.CYAN,
+        )
+    )
 
 
 def _ensure_repo():

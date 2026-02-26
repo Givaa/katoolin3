@@ -11,7 +11,7 @@ from .categories import (
     get_top_tools,
     count_all_tools,
 )
-from .installer import install_tool, install_category
+from .installer import install_tool, install_category, show_installed
 from .repository import (
     check_root,
     is_repo_added,
@@ -75,6 +75,13 @@ def parse_args():
         "--search", "-s",
         metavar="QUERY",
         help="Search for a tool by name",
+    )
+    group.add_argument(
+        "--status",
+        nargs="?",
+        const="all",
+        metavar="N",
+        help="Show installed tools (optionally filter by category N)",
     )
     group.add_argument(
         "--add-repo",
@@ -183,7 +190,8 @@ def show_main_menu():
  1) Manage Kali Repositories
  2) View Categories
  3) Search Tool
- 4) Help
+ 4) Installed Tools
+ 5) Help
  0) Exit
 """
     )
@@ -315,7 +323,8 @@ def show_help():
     1          Manage Kali repositories (add/remove)
     2          Browse tool categories
     3          Search for a specific tool
-    4          Show this help
+    4          Show installed tools
+    5          Show this help
     0          Exit
 
   In category view:
@@ -331,6 +340,8 @@ def show_help():
     katoolin3 --install TOOL     Install a single tool
     katoolin3 --list             List categories
     katoolin3 --search QUERY     Search for a tool
+    katoolin3 --status           Show installed tools (all categories)
+    katoolin3 --status N         Show installed tools in category N
     katoolin3 --add-repo         Add Kali repositories
     katoolin3 --remove-repo      Remove Kali repositories
 """
@@ -376,6 +387,8 @@ def interactive_menu():
         elif choice == "3":
             search_menu()
         elif choice == "4":
+            show_installed()
+        elif choice == "5":
             show_help()
         elif choice in ("0", "exit", "quit"):
             print("\nBye!")
@@ -401,6 +414,10 @@ def main():
         return
     if args.search:
         cli_search(args.search)
+        return
+    if args.status is not None:
+        cat_id = None if args.status == "all" else int(args.status)
+        show_installed(cat_id)
         return
 
     # Everything else needs root

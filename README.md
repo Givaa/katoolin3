@@ -98,6 +98,10 @@ katoolin3 --list
 # Search for a tool
 katoolin3 --search nmap
 
+# Show installed tools (all categories or specific one)
+katoolin3 --status
+katoolin3 --status 10
+
 # Manage repositories
 sudo katoolin3 --add-repo
 sudo katoolin3 --remove-repo
