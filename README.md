@@ -1,149 +1,144 @@
 # katoolin3
 
-A Python 3 CLI tool that lets you install [Kali Linux](https://www.kali.org/) penetration testing tools on any Debian/Ubuntu-based distribution — without having to install Kali itself.
+Installa i tool di [Kali Linux](https://www.kali.org/) su qualsiasi sistema Debian/Ubuntu — senza installare Kali.
 
-Kali Linux ships with 400+ security and hacking tools (nmap, aircrack-ng, burpsuite, sqlmap, metasploit, netexec, bloodhound, etc.), but they are normally only available inside a Kali installation. **katoolin3** adds the official Kali repositories to your system and provides an interactive menu to browse, search, and install any of those tools individually or by category.
+Kali Linux include 400+ tool per penetration testing (nmap, aircrack-ng, burpsuite, sqlmap, metasploit, netexec, bloodhound, ecc.), normalmente disponibili solo all'interno di Kali. **katoolin3** aggiunge i repository ufficiali Kali al tuo sistema e offre un menu interattivo per sfogliare, cercare e installare i tool singolarmente o per categoria.
 
-This is a complete Python 3 rewrite of the original [katoolin](https://github.com/LionSec/katoolin) by LionSec.
+---
 
-## What's new in katoolin3
+## Avvio rapido
 
-The original katoolin was a single monolithic Python 2 script (1300+ lines) that is no longer maintained and incompatible with modern systems. katoolin3 is a full rewrite that brings:
+```bash
+git clone https://github.com/Givaa/katoolin3.git
+cd katoolin3
+./katoolin3.sh
+```
 
-- **Python 3 support** — Python 2 reached end-of-life in 2020
-- **Modular architecture** — clean separation into categories, installer, repository manager, and CLI
-- **Safe repository management** — uses a dedicated file in `/etc/apt/sources.list.d/` instead of appending to `sources.list`
-- **Data-driven design** — all 415 tools defined as data, not repeated if/elif chains
-- **Proper error handling** — uses `subprocess.run()` with return code checks instead of `os.system()`
-- **pip installable** — standard `setup.py` with console script entry point
-- **Search functionality** — find any tool across all 15 categories
-- **Fixed broken install methods** — the original used dead `wget` URLs and outdated `git clone` commands for ~12 tools; all tools now install cleanly via `apt` from the official Kali repository
-- **Updated tool list (2025/2026)** — added modern tools like netexec, bloodhound, evil-winrm, nuclei, ffuf, feroxbuster, ghidra, hashcat, bettercap, and many more; reorganized categories to match current Kali (added Database Assessment, Post Exploitation, Social Engineering)
+Nient'altro. Non serve installare nulla.
 
-## Features
+---
 
-- Add/remove Kali Linux repositories safely
-- Browse 15 categories with 415 penetration testing tools
-- Install individual tools or entire categories at once
-- Search tools by name across all categories
-- Automatic GPG key import and targeted repository updates
-
-### Tool Categories
-
-| # | Category | Tools |
-|---|----------|-------|
-| 1 | Information Gathering | nmap, amass, recon-ng, theharvester, masscan, subfinder, sherlock, ... |
-| 2 | Vulnerability Analysis | sqlmap, nuclei, nikto, lynis, legion, openvas, ... |
-| 3 | Web Application Analysis | burpsuite, ffuf, feroxbuster, gobuster, wpscan, caido, dirsearch, ... |
-| 4 | Database Assessment | sqlmap, jsql, dbpwaudit, hexorbase, ... |
-| 5 | Password Attacks | john, hashcat, hydra, medusa, crowbar, brutespray, ... |
-| 6 | Wireless Attacks | aircrack-ng, airgeddon, kismet, wifite, bully, hcxtools, mdk4, ... |
-| 7 | Reverse Engineering | ghidra, apktool, edb-debugger, yara, detect-it-easy, ... |
-| 8 | Exploitation Tools | metasploit-framework, armitage, beef-xss, evilginx2, set, ... |
-| 9 | Sniffing & Spoofing | bettercap, responder, mitmproxy, mitm6, ettercap, wireshark, ... |
-| 10 | Post Exploitation | netexec, bloodhound, evil-winrm, impacket-scripts, mimikatz, ... |
-| 11 | Forensics | autopsy, binwalk, volatility, chainsaw, foremost, testdisk, ... |
-| 12 | Reporting Tools | dradis, eyewitness, cherrytree, maltego, faraday-cli, ... |
-| 13 | Social Engineering | set, beef-xss, maltego, wifiphisher, ... |
-| 14 | Stress Testing | slowhttptest, t50, dhcpig, thc-ssl-dos, ... |
-| 15 | Hardware Hacking | android-sdk, arduino, apktool, ... |
-
-## Requirements
+## Requisiti
 
 - Python 3.6+
-- Debian/Ubuntu-based Linux distribution (with `apt-get`)
-- Root privileges
+- Linux basato su Debian/Ubuntu (con `apt-get`)
+- Privilegi di root (gestiti automaticamente dallo script)
 
-## Installation
+---
 
-### Option 1: pip install
+## Utilizzo
 
-```bash
-git clone https://github.com/Givaa/katoolin3.git
-cd katoolin3
-sudo pip3 install .
-sudo katoolin3
-```
-
-### Option 2: Run directly
+### Menu interattivo
 
 ```bash
-git clone https://github.com/Givaa/katoolin3.git
-cd katoolin3
-sudo python3 -m katoolin3
+./katoolin3.sh
 ```
 
-## Usage
+```
+  1  Gestisci repository Kali (aggiungi/rimuovi)
+  2  Sfoglia le categorie di tool
+  3  Cerca un tool
+  4  Tool installati
+  5  Aiuto
+  0  Esci
+```
 
-### CLI Mode (non-interactive)
+Nella vista categoria:
+```
+  <numero>  Installa il tool corrispondente
+  0         Installa tutti i tool della categoria
+  show      Mostra di nuovo la lista
+  back      Torna al menu precedente
+```
 
-Quick commands for scripting and fast installs:
+### Modalità CLI (non interattiva)
 
 ```bash
-# Install top essential tools (~50 tools, the best from each category)
-sudo katoolin3 --top
+# Installa i tool essenziali (~50 tool, i migliori per categoria)
+./katoolin3.sh --top
 
-# Install ALL 415 tools
-sudo katoolin3 --full
+# Installa TUTTI i 415 tool
+./katoolin3.sh --full
 
-# Install a specific category (e.g. 10 = Post Exploitation)
-sudo katoolin3 --category 10
+# Installa una categoria specifica (es. 10 = Post Exploitation)
+./katoolin3.sh --category 10
 
-# Install a single tool
-sudo katoolin3 --install netexec
+# Installa un singolo tool
+./katoolin3.sh --install netexec
 
-# List all categories
-katoolin3 --list
+# Elenca tutte le categorie
+./katoolin3.sh --list
 
-# Search for a tool
-katoolin3 --search nmap
+# Cerca un tool
+./katoolin3.sh --search nmap
 
-# Show installed tools (all categories or specific one)
-katoolin3 --status
-katoolin3 --status 10
+# Mostra i tool installati (tutte le categorie o una specifica)
+./katoolin3.sh --status
+./katoolin3.sh --status 10
 
-# Manage repositories
-sudo katoolin3 --add-repo
-sudo katoolin3 --remove-repo
+# Gestisci i repository manualmente
+./katoolin3.sh --add-repo
+./katoolin3.sh --remove-repo
 ```
 
-### Interactive Mode
+---
 
-Run without arguments to get the interactive menu:
+## Categorie di tool
+
+| # | Categoria | Esempi |
+|---|-----------|--------|
+| 1 | Information Gathering | nmap, amass, recon-ng, masscan, subfinder, sherlock |
+| 2 | Vulnerability Analysis | sqlmap, nuclei, nikto, lynis, openvas |
+| 3 | Web Application Analysis | burpsuite, ffuf, feroxbuster, gobuster, wpscan |
+| 4 | Database Assessment | sqlmap, jsql, dbpwaudit, hexorbase |
+| 5 | Password Attacks | john, hashcat, hydra, medusa, crowbar |
+| 6 | Wireless Attacks | aircrack-ng, airgeddon, kismet, wifite, hcxtools |
+| 7 | Reverse Engineering | ghidra, apktool, edb-debugger, yara |
+| 8 | Exploitation Tools | metasploit-framework, beef-xss, evilginx2, set |
+| 9 | Sniffing & Spoofing | bettercap, responder, mitmproxy, ettercap, wireshark |
+| 10 | Post Exploitation | netexec, bloodhound, evil-winrm, impacket-scripts |
+| 11 | Forensics | autopsy, binwalk, volatility, chainsaw, testdisk |
+| 12 | Reporting Tools | dradis, eyewitness, cherrytree, faraday-cli |
+| 13 | Social Engineering | set, beef-xss, maltego, wifiphisher |
+| 14 | Stress Testing | slowhttptest, t50, dhcpig, thc-ssl-dos |
+| 15 | Hardware Hacking | android-sdk, arduino, apktool |
+
+---
+
+## Sicurezza e conflitti di pacchetti
+
+katoolin3 applica automaticamente una regola di **apt pinning** quando aggiunge i repository Kali. Questo assegna ai pacchetti Kali una priorità bassa (50), in modo che:
+
+- Non sovrascrivano mai pacchetti di sistema Ubuntu/Debian durante `apt upgrade`
+- Vengano installati **solo se esplicitamente richiesti** (es. `apt install nmap`)
+
+### Prima di `apt upgrade`
+
+Nonostante il pinning, è comunque consigliato rimuovere i repository Kali prima di aggiornare il sistema:
 
 ```bash
-sudo katoolin3
+./katoolin3.sh --remove-repo
 ```
 
-```
-Main menu:
-  1  Manage Kali repositories (add/remove)
-  2  Browse tool categories
-  3  Search for a specific tool
-  4  Show installed tools
-  5  Help
-  0  Exit
+oppure dal menu interattivo: `1` → `2`. Poi riaggiungerli dopo:
 
-In category view:
-  <number>  Install the tool at that number
-  0         Install all tools in the category
-  show      Re-display the tool list
-  back      Return to previous menu
+```bash
+./katoolin3.sh --add-repo
 ```
 
-## Warning
+### Se si verificano conflitti
 
-Before updating your system, **remove all Kali Linux repositories** to avoid package conflicts:
+In caso di errore dpkg durante l'installazione di un tool:
 
+```bash
+sudo dpkg --configure -a
+sudo apt-get install -f
 ```
-kat > 1
-repo > 2
-```
 
-This is important because Kali packages can override your system's default packages during `apt upgrade`.
+---
 
 ## Credits
 
-- Original project: [katoolin](https://github.com/LionSec/katoolin) by LionSec
-- Python 3 rewrite: [Givaa](https://github.com/Givaa)
-- License: GPLv2
+- Progetto originale: [katoolin](https://github.com/LionSec/katoolin) by **LionSec**
+- Fork e riscrittura in Python 3: **[Givaa](https://github.com/Givaa)**
+- Licenza: GPLv2

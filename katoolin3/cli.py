@@ -30,7 +30,8 @@ BANNER = r"""
  |_|\_\__,_|\__\___/ \___/|_|_|_| |_|____/{reset}  v{version}
 
  {green}+ -- -- +=[ Kali Linux Tools Installer
- + -- -- +=[ {tool_count} Tools in {cat_count} Categories{reset}
+ + -- -- +=[ {tool_count} Tools in {cat_count} Categories
+ + -- -- +=[ by Givaa{reset}
  {yellow}[W] Remove Kali repos before updating your system.{reset}
 """
 

@@ -78,7 +78,12 @@ def _ensure_repo():
 def install_package(package_name):
     """Install a package via apt-get."""
     print_info(f"Installing {package_name}...")
-    result = subprocess.run(["apt-get", "install", "-y", package_name])
+    result = subprocess.run([
+        "apt-get", "install", "-y",
+        "--no-install-recommends",
+        "--no-install-suggests",
+        package_name,
+    ])
     if result.returncode == 0:
         print_success(f"{package_name} installed successfully.")
     else:

@@ -6,7 +6,7 @@ setup(
     description="Install Kali Linux tools on Debian/Ubuntu",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    author="LionSec (original), katoolin3 contributors",
+    author="Givaa",
     license="GPLv2",
     packages=find_packages(),
     python_requires=">=3.6",
